@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# to config,
+# 1: chmod +x config
+# 1: ./config
+# in future, config will take many arguments
+installing_dir="/usr/local/bin"
+# make ppt does not clash with already installed program
+ppt -v &>/dev/null
+if [[ $? == 0 ]]; then
+    # make sure /usr/local/bin/ exists
+    if [[ -d $installing_dir ]]; then
+        sudo cp ppt $installing_dir
+    else
+        # first create this directory
+        sudo mkdir $installing_dir
+        sudo cp ppt $installing_dir
+    fi
+else
+    echo "ppt already installed or clashes with other software"
+    echo "therefore, rename this softare what you want"
+    echo -n "please enter a new name: "
+    new_name=read()
+    mv ppt $new_name
+    # make sure /usr/local/bin/ exists
+    if [[ -d $installing_dir ]]; then
+        sudo cp $new_name $installing_dir
+    else
+        # first create this directory
+        sudo mkdir $installing_dir
+        sudo cp $new_name $installing_dir
+    fi
+fi
+        
+    
